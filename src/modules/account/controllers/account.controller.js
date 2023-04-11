@@ -68,6 +68,7 @@ export default {
       success: true,
       accountId: req.accountId,
       fullname: req.fullname,
+      email: req.email,
       image: req.image,
       username: req.sub,
       role: req.role,

@@ -3,13 +3,17 @@ import bcrypt from "bcrypt";
 import auth from "../../../middlewares/authentication.js";
 
 const AccountService = {
-  findAll: async (query) => await AccountRepository.findAll({ where: { ...query } }),
+  findAll: async (query) =>
+    await AccountRepository.findAll({ where: { ...query } }),
   findOneById: async (id) => await AccountRepository.findOneById(id),
   register: async (data, file) => {
     data.password = await bcrypt.hash(data.password, 8);
     const duplicate = await AccountRepository.findByUsername(data.username);
     if (!duplicate) {
-      return await AccountRepository.create({ ...data, image: file ? file.filename : "" });
+      return await AccountRepository.create({
+        ...data,
+        image: file ? file.filename : "",
+      });
     }
     return;
   },
@@ -21,6 +25,7 @@ const AccountService = {
         accountId: result.id,
         fullname: `${result.fname} ${result.lname}`,
         role: result.role,
+        email: result.email,
         image: result.image,
       };
       return auth.generateToken(payload);
@@ -31,7 +36,10 @@ const AccountService = {
   updateById: async (id, data, file) => {
     const result = await AccountRepository.findOneById(id);
     if (result) {
-      const updated = await AccountRepository.updateById(result.id, { ...data, image: file ? file.filename : result.image });
+      const updated = await AccountRepository.updateById(result.id, {
+        ...data,
+        image: file ? file.filename : result.image,
+      });
       if (updated) {
         return await AccountRepository.findOneById(id);
       }

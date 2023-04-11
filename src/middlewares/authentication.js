@@ -2,8 +2,12 @@ import jwt from "jsonwebtoken";
 import path from "path";
 import fs from "fs";
 
-const privateKey = fs.readFileSync(path.join(__dirname, "../../s4t", "private.key"));
-const publicKey = fs.readFileSync(path.join(__dirname, "../../s4t", "public.key"));
+const privateKey = fs.readFileSync(
+  path.join(__dirname, "../../s4t", "private.key")
+);
+const publicKey = fs.readFileSync(
+  path.join(__dirname, "../../s4t", "public.key")
+);
 
 const signOptions = {
   issuer: "systemandservice",
@@ -33,6 +37,7 @@ const verifyToken = (req, res, next) => {
 
     req.accountId = decode.accountId;
     req.fullname = decode.fullname;
+    req.email = decode.email;
     req.image = decode.image;
     req.sub = decode.sub;
     req.role = decode.role;

@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       picwork_id: DataTypes.INTEGER,
       image_album: DataTypes.STRING,
+      place: DataTypes.STRING,
+      activity: DataTypes.STRING,
+      detail: DataTypes.STRING,
     },
     {
       // setting sequelize

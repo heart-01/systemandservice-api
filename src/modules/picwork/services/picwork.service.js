@@ -29,6 +29,16 @@ const PicworkService = {
   },
   findAllAlbumImages: async (id) => await PicworkRepository.findAllAlbumImages(id),
   createAlbumImages: async (id, data, file) => await PicworkRepository.createAlbumImages({ picwork_id: id, ...data, image_album: file ? file.filename : "" }),
+  patchAlbumImagesById: async (id, data, file) => {
+    const result = await PicworkRepository.findAlbumImagesById(id);
+    if (result) {
+      const updated = await PicworkRepository.patchAlbumImagesById(result.id, { ...data, image_album: file ? file.filename : result.image_album });
+      if (updated) {
+        return await PicworkRepository.findAlbumImagesById(id);
+      }
+    }
+    return null;
+  },
   deleteAlbumImagesById: async (id) => {
     const result = await PicworkRepository.findAlbumImagesById(id);
     if (result) {

@@ -28,6 +28,12 @@ const PicworkRepository = {
     }),
   findAlbumImagesById: async (id) => await db.AlbumImages.findByPk(id),
   createAlbumImages: async (data) => await db.AlbumImages.create(data),
+  patchAlbumImagesById: async (id, data) =>
+    await db.AlbumImages.update(data, {
+      where: {
+        id: id,
+      },
+    }),
   deleteAlbumImagesById: async (id) =>
     await db.AlbumImages.destroy({
       where: {
